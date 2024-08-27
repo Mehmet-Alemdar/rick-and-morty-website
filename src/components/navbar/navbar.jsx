@@ -5,7 +5,9 @@ import Link from 'next/link'
 const Navbar = ({ pathname }) => {
   return (
     <div className="fixed top-0 left-0 right-0 px-[27px] flex justify-between items-center py-2.5 h-[60px] bg-white z-50" style={{ borderBottom: pathname === '/docs' ? '1px solid' : '0px', borderColor: '#e5e7eb' }}>
-      <LogoIcon color={"#333"} />
+      <Link href={"/"}>
+        <LogoIcon color={"#333"} />
+      </Link>
       <div className='flex items-center gap-9 text-primary-black font-semibold text-lg font-sans'>
         <Link href={"/docs"} className='hover:text-primary-orange transition-all duration-150'>Docs</Link>
         <Link href={"/"} className='hover:text-primary-orange transition-all duration-150'>About</Link>

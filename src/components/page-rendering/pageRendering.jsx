@@ -6,7 +6,7 @@ import * as themes from "react-syntax-highlighter/dist/esm/styles/hljs";
 const PageRendering = ({content}) => {
 
   return (
-    <div className='w-full flex justify-center pt-[100px]'>
+    <div className='w-full flex justify-center pt-[50px]'>
       <div className='max-w-[900px] px-1.5'>
         {
         content && Array.isArray(content) && content.length > 0 && content.map((item, index) => {
@@ -20,21 +20,23 @@ const PageRendering = ({content}) => {
                 {
                   item.content && Array.isArray(item.content) && item.content.length > 0 && item.content.map((subItem, subIndex) => {
                     if (subItem.type === 'text') {
-                      return <span key={subIndex} className='text-[18px] font-light'>{subItem.value}</span>
+                      return (
+                        <span key={subIndex} className='text-[18px] font-light'>{subItem.value}</span>
+                      )
                     }
                     if (subItem.type === 'bold') {
                       return <span key={subIndex} className='text-[18px] font-bold'>{subItem.value}</span>
                     }
                     if (subItem.type === 'link') {
                       return (
-                        <p key={subIndex} className='underline underline-offset-4 decoration-primary-orange hover:no-underline hover:text-primary-orange transition-all duration-150'>
+                        <p key={subIndex} className='underline underline-offset-4 mb-4 decoration-primary-orange hover:no-underline hover:text-primary-orange transition-all duration-150'>
                           <a href={subItem.value} className='text-[18px] font-light'>{subItem.value}</a>
                         </p>
                       )
                     }
                     if (subItem.type === 'code') {
                       return (
-                        <div key={subIndex} className='rounded-[6px] overflow-hidden my-4'>
+                        <div key={subIndex} className='rounded-[6px] overflow-hidden mb-4'>
                           <SyntaxHighlighter language="javascript" style={themes['tomorrowNight']}>
                             {subItem.value}
                           </SyntaxHighlighter>
@@ -44,7 +46,11 @@ const PageRendering = ({content}) => {
                     if (subItem.type === 'block') {
                       return (
                         <div key={subIndex} className='border-l-8 border-l-primary-orange bg-secondary-orange py-4 px-2'>
-                          <p className='text-[18px] font-light italic text-slate-600	'>{subItem.value}</p>
+                          <p className='text-[18px] font-light italic text-slate-600'>{subItem.value}
+                            {subItem.text_link && (
+                              <a href={subItem.link} className='text-[18px] text-primary-black underline underline-offset-4 decoration-primary-orange hover:no-underline hover:text-primary-orange transition-all duration-150'>{subItem.text_link}</a>
+                            )}
+                          </p>
                         </div>
                       )
                     }

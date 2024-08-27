@@ -1,6 +1,7 @@
 "use client";
 import DocsSideBar from "@/components/docs-side-bar/docsSideBar";
 import PageRendering from "@/components/page-rendering/pageRendering";
+
 import React from "react";
 
 const DocsPage = () => {
@@ -79,46 +80,29 @@ const DocsPage = () => {
         },
         {
           type: "block",
-          value: "New to GraphQL? check the docs"
+          value: "New to GraphQL? check the docs ",
+          text_link: "here",
+          link: "https://graphql.org/learn/",
         }
       ],
     },
-    // {
-    //   type: "link",
-    //   value: "https://rickandmortyapi.com/graphql",
-    // },
-    // {
-    //   type: "subtitle",
-    //   value: "REST",
-    // },
-    // {
-    //   type: "link",
-    //   value: "https://rickandmortyapi.com/api",
-    // },
-    // {
-    //   type: "subtitle",
-    //   value: "Code Example",
-    // },
-    // {
-    //   type: "code",
-    //   value: `
-    //     query {
-    //       characters(page: 2, filter: { name: "rick" }) {
-    //         info {
-    //           count
-    //       }
-    //       results {
-    //           name
-    //       }
-    //       }
-    //       location(id: 1) {
-    //         id
-    //     }
-    //     episodesByIds(ids: [1, 2]) {
-    //       id
-    //       }
-    //     } `,
-    // },
+    {
+      type: "subtitle",
+      value: "REST",
+      content: [
+        {
+          type: "link",
+          value: "https://rickandmortyapi.com/api",
+        },
+        {
+          type: "text",
+          value: "The base url contains information about all available API's resources. All requests are GET requests and go over https. All responses will return data in json."
+        },
+        {
+          type: "text_code",
+          value: "GET"}
+      ],
+    },
   ];
 
   const sideBarContent = [
@@ -265,7 +249,7 @@ const DocsPage = () => {
     },
   ]
   return (
-    <div className="flex">
+    <div className="flex px-[27px]">
       <DocsSideBar content={sideBarContent}/>
       <PageRendering content={content}/>
     </div>
