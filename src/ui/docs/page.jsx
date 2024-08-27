@@ -12,6 +12,22 @@ const DocsPage = () => {
     {
       type: "subtitle",
       value: "Introduction",
+      content: [
+        {
+          type: "text",
+          value:
+            "This documentation will help you get familiar with the resources of the ",
+        },
+        {
+          type: "bold",
+          value: "Rick and Morty API ",
+        },
+        {
+          type: "text",
+          value:
+            "and show you how to make different queries, so that you can get the most out of it.",
+        },
+      ]
     },
     {
       type: "paragraph2",
@@ -35,43 +51,74 @@ const DocsPage = () => {
     {
       type: "subtitle",
       value: "GraphQL",
-    },
-    {
-      type: "link",
-      value: "https://rickandmortyapi.com/graphql",
-    },
-    {
-      type: "subtitle",
-      value: "REST",
-    },
-    {
-      type: "link",
-      value: "https://rickandmortyapi.com/api",
-    },
-    {
-      type: "subtitle",
-      value: "Code Example",
-    },
-    {
-      type: "code",
-      value: `
+      content: [
+        {
+          type: "link",
+          value: "https://rickandmortyapi.com/graphql",
+        },
+        {
+          type: "code",
+          value: `
   query {
     characters(page: 2, filter: { name: "rick" }) {
       info {
-        count
-     }
-     results {
-        name
-     }
+          count
+      }
+      results {
+          name
+      }
     }
-    location(id: 1) {
-      id
-   }
-   episodesByIds(ids: [1, 2]) {
-     id
-    }
-  } `,
+      location(id: 1) {
+        id
+      }
+      episodesByIds(ids: [1, 2]) {
+        id
+      }
+  } 
+  `,
+        },
+        {
+          type: "block",
+          value: "New to GraphQL? check the docs"
+        }
+      ],
     },
+    // {
+    //   type: "link",
+    //   value: "https://rickandmortyapi.com/graphql",
+    // },
+    // {
+    //   type: "subtitle",
+    //   value: "REST",
+    // },
+    // {
+    //   type: "link",
+    //   value: "https://rickandmortyapi.com/api",
+    // },
+    // {
+    //   type: "subtitle",
+    //   value: "Code Example",
+    // },
+    // {
+    //   type: "code",
+    //   value: `
+    //     query {
+    //       characters(page: 2, filter: { name: "rick" }) {
+    //         info {
+    //           count
+    //       }
+    //       results {
+    //           name
+    //       }
+    //       }
+    //       location(id: 1) {
+    //         id
+    //     }
+    //     episodesByIds(ids: [1, 2]) {
+    //       id
+    //       }
+    //     } `,
+    // },
   ];
 
   const sideBarContent = [
@@ -84,15 +131,15 @@ const DocsPage = () => {
         },
         {
           title: "REST",
-          link: "rest",
+          link: "#rest",
         },
         {
           title: "Info and Pagination",
-          link: "info-and-pagination",
+          link: "#info-and-pagination",
         },
         {
           title: "JavaScript client",
-          link: "javascript-client",
+          link: "#javascript-client",
         },
       ],
     },
@@ -220,7 +267,7 @@ const DocsPage = () => {
   return (
     <div className="flex">
       <DocsSideBar content={sideBarContent}/>
-      <PageRendering content={content} />
+      <PageRendering content={content}/>
     </div>
   );
 };

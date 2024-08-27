@@ -1,30 +1,52 @@
 import React from 'react'
 import SyntaxHighlighter from "react-syntax-highlighter";
 import atelierCaveDark from "react-syntax-highlighter/dist/esm/styles/hljs/atelier-cave-dark";
+import * as themes from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 const PageRendering = ({content}) => {
 
   return (
-    <div className='w-full flex justify-center pt-[30px]'>
+    <div className='w-full flex justify-center pt-[100px]'>
       <div className='max-w-[900px] px-1.5'>
         {
         content && Array.isArray(content) && content.length > 0 && content.map((item, index) => {
           if (item.type === 'heading') {
-            return <h1 key={index} className='font-bold text-4xl'>{item.value}</h1>
+            return <h1 key={index} className='font-bold text-4xl text-primary-black'>{item.value}</h1>
           }
           if (item.type === 'subtitle') {
-            return <p key={index} className='text-[28px] font-bold pt-20'>{item.value}</p>
-          }
-          if(item.type === 'paragraph2') {
             return (
-              <div key={index} className='py-2'>
+              <div key={index} >
+                <p className='text-[28px] font-bold pt-20 pb-2 text-primary-black'>{item.value}</p>
                 {
-                  item.items && Array.isArray(item.items) && item.items.length > 0 && item.items.map((subItem, subIndex) => {
+                  item.content && Array.isArray(item.content) && item.content.length > 0 && item.content.map((subItem, subIndex) => {
                     if (subItem.type === 'text') {
-                      return <span key={subIndex} className='text-[18px]'>{subItem.value}</span>
+                      return <span key={subIndex} className='text-[18px] font-light'>{subItem.value}</span>
                     }
                     if (subItem.type === 'bold') {
                       return <span key={subIndex} className='text-[18px] font-bold'>{subItem.value}</span>
+                    }
+                    if (subItem.type === 'link') {
+                      return (
+                        <p key={subIndex} className='underline underline-offset-4 decoration-primary-orange hover:no-underline hover:text-primary-orange transition-all duration-150'>
+                          <a href={subItem.value} className='text-[18px] font-light'>{subItem.value}</a>
+                        </p>
+                      )
+                    }
+                    if (subItem.type === 'code') {
+                      return (
+                        <div key={subIndex} className='rounded-[6px] overflow-hidden my-4'>
+                          <SyntaxHighlighter language="javascript" style={themes['tomorrowNight']}>
+                            {subItem.value}
+                          </SyntaxHighlighter>
+                        </div>
+                      )
+                    }
+                    if (subItem.type === 'block') {
+                      return (
+                        <div key={subIndex} className='border-l-8 border-l-primary-orange bg-secondary-orange py-4 px-2'>
+                          <p className='text-[18px] font-light italic text-slate-600	'>{subItem.value}</p>
+                        </div>
+                      )
                     }
                   })
                 }
@@ -40,7 +62,7 @@ const PageRendering = ({content}) => {
           }
           if (item.type === 'code') {
             return (
-              <div key={index} className='rounded-xl overflow-hidden'>
+              <div key={index} className='rounded-xl overflow-hidden pb-80'>
               <SyntaxHighlighter language="javascript" style={atelierCaveDark}>
                 {item.value}
               </SyntaxHighlighter>
