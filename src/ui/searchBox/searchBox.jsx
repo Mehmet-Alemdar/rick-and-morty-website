@@ -31,7 +31,6 @@ const SearchBox = ({ handleSearch }) => {
         <option value="name">by Name</option>
         <option value="species">by Species</option>
         <option value="status">by Status</option>
-        <option value="gender">by Gender</option>
       </select>
     </div>
   )

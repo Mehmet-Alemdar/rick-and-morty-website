@@ -6,6 +6,7 @@ import { fetchCharacters, fetchSingleCharacter } from '@/api/api'
 import Pagination from '@/ui/pagination/pagination'
 import SearchBox from '../searchBox/searchBox'
 import Modal from '@/ui/modal/modal'
+import statusDot  from '@/utils/statusDot'
 
 const HomePage = () => {
   const [data, setData] = useState(null)
@@ -44,7 +45,7 @@ const HomePage = () => {
   }
 
   return (
-    <div className='flex flex-col items-center  h-screen gap-0'>
+    <div className='flex flex-col items-center gap-0'>
       <div className='min-h-[400px] relative flex items-center text-center'>
         <h1 className='relative z-10 md:text-8xl sm:text-6xl text-5xl font-black text-primary-black'>The Rick and Morty API</h1>
         <div className='absolute inset-0 flex items-center justify-center z-0'>
@@ -95,7 +96,7 @@ const HomePage = () => {
                 }
               </>
             </Modal>
-            {data && data.results && data.results.length > 0 && data.results.filter(item => item[search.by].includes(search.val)).map((item, index) => (
+            {data && data.results && data.results.length > 0 && data.results.filter(item => item[search.by].toLowerCase().includes(search.val.toLowerCase())).map((item, index) => (
               <div key={index} className='flex flex-col sm:flex-row bg-[#3c3e44] sm:w-[600px] w-[85%]  h-auto sm:h-[210px] rounded-lg overflow-hidden shadow-lg'>
                 <div className='h-[300px] sm:h-full'>
                   <Image src={item.image} alt={item.name} width={220} height={220} className='object-cover h-full w-full sm:w-auto' />
@@ -127,10 +128,6 @@ const HomePage = () => {
       </div>
     </div>
   )
-}
-
-const statusDot = (status) => {
-  return status === 'Alive' ? 'bg-green-500' : status === 'Dead' ? 'bg-red-500' : 'bg-gray-500'
 }
 
 export default HomePage
