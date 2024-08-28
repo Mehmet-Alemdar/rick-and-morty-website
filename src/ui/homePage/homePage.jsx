@@ -94,7 +94,6 @@ const HomePage = () => {
                   </div>
                 }
               </>
-
             </Modal>
             {data && data.results && data.results.length > 0 && data.results.filter(item => item[search.by].includes(search.val)).map((item, index) => (
               <div key={index} className='flex flex-col sm:flex-row bg-[#3c3e44] sm:w-[600px] w-[85%]  h-auto sm:h-[210px] rounded-lg overflow-hidden shadow-lg'>
