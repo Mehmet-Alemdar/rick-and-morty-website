@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Hero from "@/components/icons/hero";
 import Image from "next/image";
 import { fetchCharacters, fetchSingleCharacter } from "@/api/api";
@@ -8,6 +8,7 @@ import SearchBox from "../searchBox/searchBox";
 import Modal from "@/ui/modal/modal";
 import StatusDot from "@/components/status-dot/statusDot";
 import CharacterCardSkeleton from "@/components/skeleton/characterCardSkeleton";
+import { BsChevronUp } from "react-icons/bs";
 
 const HomePage = () => {
   const [data, setData] = useState(null);
@@ -15,6 +16,13 @@ const HomePage = () => {
   const [search, setSearch] = useState({ val: "", by: "name" });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
+  const topDivRef = useRef(null);
+
+  const scrollToTop = () => {
+    if (topDivRef.current) {
+      topDivRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const openModal = async (id) => {
     fetchSingleCharacter({ id }).then((res) => {
@@ -60,8 +68,10 @@ const HomePage = () => {
           <Hero />
         </div>
       </div>
-      <div className="flex-1 flex flex-col justify-center bg-[#272b33] w-full">
-              
+      <div
+        ref={topDivRef}
+        className="flex-1 flex flex-col justify-center bg-[#272b33] w-full"
+      >
         <div className="flex flex-wrap justify-center items-center gap-8 sm:py-[81px] py-[40px] h-full">
           {isLoading ? (
             <>
@@ -94,11 +104,8 @@ const HomePage = () => {
                             {modalData.name}
                           </h2>
                           <div className="flex items-center gap-2 justify-center">
-                            <div
-                              className={`h-3 w-3 rounded-full sm:text-xl ${statusDot(
-                                modalData.status
-                              )}`}
-                            ></div>
+                            {/* <div className={`h-3 w-3 rounded-full sm:text-xl ${statusDot(modalData.status)}`}></div> */}
+                            <StatusDot status={modalData.status} />
                             <p className="text-white sm:text-xl">
                               {modalData.species} - {modalData.status}
                             </p>
@@ -221,6 +228,12 @@ const HomePage = () => {
           )}
         </div>
       </div>
+      <button
+        className="fixed bottom-5 right-5 border-gray-300 shadow-xl border-2 p-4 bg-white rounded-full inset-border hover:bg-gray-300 transition-all duration-150"
+        onClick={scrollToTop}
+      >
+        <BsChevronUp />
+      </button>
     </div>
   );
 };

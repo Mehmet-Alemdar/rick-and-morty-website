@@ -6,6 +6,12 @@ import EditThisPage from "@/components/edit-this-page/editThisPage";
 import React from "react";
 
 const DocsPage = () => {
+  const [isSideBarOpen, setIsSideBarOpen] = React.useState(false);
+
+  const sideBarToggle = () => {
+    setIsSideBarOpen(!isSideBarOpen);
+  }
+
   const content = [
     {
       type: "heading",
@@ -252,13 +258,11 @@ const DocsPage = () => {
   return (
     <div>
       <div className="flex px-[27px]">
-        <DocsSideBar content={sideBarContent} />
-        <PageRendering content={content} />
+        <DocsSideBar content={sideBarContent} isSideBarOpen={isSideBarOpen}/>
+        <PageRendering content={content} sideBarToggle={sideBarToggle} isSideBarOpen={isSideBarOpen}/>
       </div>
       <EditThisPage />
     </div>
-
-
   );
 };
 

@@ -2,11 +2,12 @@ import React from 'react'
 import SyntaxHighlighter from "react-syntax-highlighter";
 import atelierCaveDark from "react-syntax-highlighter/dist/esm/styles/hljs/atelier-cave-dark";
 import * as themes from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { AiOutlinePlus } from "react-icons/ai";
 
-const PageRendering = ({content}) => {
+const PageRendering = ({content, sideBarToggle, isSideBarOpen}) => {
 
   return (
-    <div className='w-full flex justify-center pt-[50px] border-l-[1px] pb-6'>
+    <div className='w-full flex justify-center pt-[50px] md:border-l-[1px] pb-6'>
       <div className='max-w-[900px] px-1.5'>
         {
         content && Array.isArray(content) && content.length > 0 && content.map((item, index) => {
@@ -36,11 +37,11 @@ const PageRendering = ({content}) => {
                     }
                     if (subItem.type === 'code') {
                       return (
-                        <div key={subIndex} className='rounded-[6px] overflow-hidden mb-4'>
-                          <SyntaxHighlighter language="javascript" style={themes['tomorrowNight']}>
-                            {subItem.value}
-                          </SyntaxHighlighter>
-                        </div>
+                        <div key={subIndex} className='rounded-[4px] md:rounded-[6px] overflow-hidden mb-2 md:mb-4'>
+                        <SyntaxHighlighter language="javascript" style={themes['tomorrowNight']}>
+                          {subItem.value}
+                        </SyntaxHighlighter>
+                      </div>
                       )
                     }
                     if (subItem.type === 'block') {
@@ -78,6 +79,9 @@ const PageRendering = ({content}) => {
         })
       }
       </div>
+      <button onClick={sideBarToggle} className={`md:hidden fixed bottom-5 z-[55] right-5 bg-primary-orange shadow-xl p-4 rounded-full inset-border hover:bg-secondary-orange transition-all duration-150 text-2xl ${isSideBarOpen ? "rotate-45" : "rotate-0"}`}>
+  <AiOutlinePlus />
+</button>
     </div>
   )
 }

@@ -1,31 +1,30 @@
 import React from 'react';
 
-const docsSideBar = ({ content }) => {
+const docsSideBar = ({ content, isSideBarOpen }) => {
   const handleLinkClick = (link) => {
     window.location.href = `#${link}`;
   };
 
   return (
-<ul className="sticky top-0 pb-6 min-w-[235px] h-[calc(-60px+100vh)] pt-[30px] overflow-y-auto">
-  {content && Array.isArray(content) && content.length > 0 && content.map((item, index) => (
-    <li key={index} className="space-y-2 pb-4">
-      <a className="font-bold text-[22px] text-primary-black cursor-pointer hover:text-primary-orange transition-all duration-150">{item.title}</a>
-      <ul className="space-y-2">
-        {item.items && Array.isArray(item.items) && item.items.length > 0 && item.items.map((subItem, subIndex) => (
-          <li key={subIndex}>
-            <a
-              className="font-light text-[17px] cursor-pointer hover:text-primary-orange transition-all duration-150"
-              onClick={() => handleLinkClick(subItem.link)}
-            >
-              {subItem.title}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </li>
-  ))}
-</ul>
-
+    <ul className={`pb-6 pt-[30px] overflow-y-auto bg-white z-50 ${isSideBarOpen ? "fixed top-0 left-0 w-full h-full" : "hidden"} md:sticky md:min-w-[235px] md:w-[235px] md:h-[calc(-60px+100vh)] md:top-0 md:block`}>
+    {content && Array.isArray(content) && content.length > 0 && content.map((item, index) => (
+      <li key={index} className="space-y-2 pb-4">
+        <a className="font-bold text-[22px] text-primary-black cursor-pointer hover:text-primary-orange transition-all duration-150">{item.title}</a>
+        <ul className="space-y-2">
+          {item.items && Array.isArray(item.items) && item.items.length > 0 && item.items.map((subItem, subIndex) => (
+            <li key={subIndex}>
+              <a
+                className="font-light text-[17px] cursor-pointer hover:text-primary-orange transition-all duration-150"
+                onClick={() => handleLinkClick(subItem.link)}
+              >
+                {subItem.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </li>
+    ))}
+  </ul>
   );
 };
 
