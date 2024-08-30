@@ -103,11 +103,28 @@ const DocsPage = () => {
         },
         {
           type: "text",
-          value: "The base url contains information about all available API's resources. All requests are GET requests and go over https. All responses will return data in json."
+          value: "The base url contains information about all available API's resources. All requests are "
         },
         {
           type: "text_code",
-          value: "GET"}
+          value: "GET"
+        },
+        {
+          type: "text",
+          value: " requests and go over "
+        },
+        {
+          type: "text_code",
+          value: "https"
+        },
+        {
+          type: "text",
+          value: " All responses will return data in "
+        },
+        {
+          type: "text_code",
+          value: "json"
+        }
       ],
     },
   ];

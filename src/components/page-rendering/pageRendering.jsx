@@ -7,31 +7,31 @@ import { AiOutlinePlus } from "react-icons/ai";
 const PageRendering = ({content, sideBarToggle, isSideBarOpen}) => {
 
   return (
-    <div className='w-full flex justify-center pt-[50px] md:border-l-[1px] pb-6'>
-      <div className='max-w-[900px] px-1.5'>
+<div className='w-full flex justify-center pt-[50px] md:border-l-[1px] pb-6 sm:px-0 px-4'>
+      <div className='max-w-[900px] px-1.5 w-full overflow-x-auto'>
         {
         content && Array.isArray(content) && content.length > 0 && content.map((item, index) => {
           if (item.type === 'heading') {
-            return <h1 key={index} className='font-bold text-4xl text-primary-black'>{item.value}</h1>
+            return <h1 key={index} className='font-bold sm:text-4xl text-3xl text-primary-black break-words'>{item.value}</h1>
           }
           if (item.type === 'subtitle') {
             return (
-              <div key={index} >
-                <p className='text-[28px] font-bold pt-20 pb-2 text-primary-black'>{item.value}</p>
+              <div key={index}>
+                <p className='sm:text-[28px] text-[24px] font-bold pt-20 pb-2 text-primary-black break-words'>{item.value}</p>
                 {
                   item.content && Array.isArray(item.content) && item.content.length > 0 && item.content.map((subItem, subIndex) => {
                     if (subItem.type === 'text') {
                       return (
-                        <span key={subIndex} className='text-[18px] font-light'>{subItem.value}</span>
+                        <span key={subIndex} className='sm:text-[18px] text-[15px] font-light break-words'>{subItem.value}</span>
                       )
                     }
                     if (subItem.type === 'bold') {
-                      return <span key={subIndex} className='text-[18px] font-bold'>{subItem.value}</span>
+                      return <span key={subIndex} className='sm:text-[18px] text-[15px] font-bold break-words'>{subItem.value}</span>
                     }
                     if (subItem.type === 'link') {
                       return (
-                        <p key={subIndex} className='underline underline-offset-4 mb-4 decoration-primary-orange hover:no-underline hover:text-primary-orange transition-all duration-150'>
-                          <a href={subItem.value} className='text-[18px] font-light'>{subItem.value}</a>
+                        <p key={subIndex} className='underline underline-offset-4 mb-4 decoration-primary-orange hover:no-underline hover:text-primary-orange transition-all duration-150 break-words'>
+                          <a href={subItem.value} className='sm:text-[18px] text-[15px] font-light break-words'>{subItem.value}</a>
                         </p>
                       )
                     }
@@ -46,25 +46,21 @@ const PageRendering = ({content, sideBarToggle, isSideBarOpen}) => {
                     }
                     if (subItem.type === 'block') {
                       return (
-                        <div key={subIndex} className='border-l-8 border-l-primary-orange bg-secondary-orange py-4 px-2'>
-                          <p className='text-[18px] font-light italic text-slate-600'>{subItem.value}
+                        <div key={subIndex} className='border-l-8 border-l-primary-orange bg-secondary-orange py-4 px-2 break-words'>
+                          <p className='sm:text-[18px] text-[15px] font-light italic text-slate-600 break-words'>{subItem.value}
                             {subItem.text_link && (
-                              <a href={subItem.link} className='text-[18px] text-primary-black underline underline-offset-4 decoration-primary-orange hover:no-underline hover:text-primary-orange transition-all duration-150'>{subItem.text_link}</a>
+                              <a href={subItem.link} className='sm:text-[18px] text-[15px] text-primary-black underline underline-offset-4 decoration-primary-orange hover:no-underline hover:text-primary-orange transition-all duration-150 break-words'>{subItem.text_link}</a>
                             )}
                           </p>
                         </div>
                       )
                     }
+                    if(subItem.type === 'text_code') {
+                      return <span key={subIndex} className='sm:text-[16px] text-[13px] p-1 px-2 rounded-md font-light break-words text-blue-700 bg-gray-200'>{subItem.value}</span>
+                    }
                   })
                 }
               </div>
-            )
-          }
-          if (item.type === 'link') {
-            return (
-              <p key={index} className='underline underline-offset-4 decoration-primary-orange hover:no-underline hover:text-primary-orange transition-all duration-150'>
-                <a href={item.value} className='text-[18px]'>{item.value}</a>
-              </p>
             )
           }
           if (item.type === 'code') {
@@ -79,9 +75,9 @@ const PageRendering = ({content, sideBarToggle, isSideBarOpen}) => {
         })
       }
       </div>
-      <button onClick={sideBarToggle} className={`md:hidden fixed bottom-5 z-[55] right-5 bg-primary-orange shadow-xl p-4 rounded-full inset-border hover:bg-secondary-orange transition-all duration-150 text-2xl ${isSideBarOpen ? "rotate-45" : "rotate-0"}`}>
-  <AiOutlinePlus />
-</button>
+      <button onClick={sideBarToggle} className={`md:hidden fixed bottom-5 z-[55] right-5 bg-primary-orange shadow-xl p-4 rounded-full inset-border transition-all duration-150 text-2xl ${isSideBarOpen ? "rotate-45" : "rotate-0"}`}>
+        <AiOutlinePlus />
+      </button>
     </div>
   )
 }
