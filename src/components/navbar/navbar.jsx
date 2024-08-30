@@ -5,7 +5,7 @@ import { AiFillHeart } from "react-icons/ai";
 
 const Navbar = ({ pathname }) => {
   return (
-    <div className={`${pathname === "/" || pathname === "/about" ? null : "sticky"} top-0 left-0 right-0 sm:px-[27px] px-[38px] flex justify-between items-center py-2.5 h-[60px] bg-white z-50 ${pathname === "/docs" ? "border-b-[1px] border-['#e5e7eb']" : null}`}>
+    <div className={`${pathname === "/" || pathname === "/about" || pathname === "/support-us" ? null : "fixed"} z-50 top-0 left-0 right-0 sm:px-[27px] px-[38px] flex justify-between items-center py-2.5 h-[60px] bg-white ${pathname === "/docs" ? "border-b-[1px] border-['#e5e7eb']" : null}`}>
       <Link href={"/"}>
         <LogoIcon color={"#333"} />
       </Link>

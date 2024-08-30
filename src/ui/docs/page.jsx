@@ -20,6 +20,7 @@ const DocsPage = () => {
     {
       type: "subtitle",
       value: "Introduction",
+      link: "introduction",
       content: [
         {
           type: "text",
@@ -59,6 +60,7 @@ const DocsPage = () => {
     {
       type: "subtitle",
       value: "GraphQL",
+      link: "graphql",
       content: [
         {
           type: "link",
@@ -96,6 +98,7 @@ const DocsPage = () => {
     {
       type: "subtitle",
       value: "REST",
+      link: "rest",
       content: [
         {
           type: "link",
@@ -124,7 +127,7 @@ const DocsPage = () => {
         {
           type: "text_code",
           value: "json"
-        }
+        },
       ],
     },
   ];
@@ -132,6 +135,7 @@ const DocsPage = () => {
   const sideBarContent = [
     {
       title: "Introduction",
+      link: "introduction",
       items: [
         {
           title: "GraphQL",
@@ -139,15 +143,15 @@ const DocsPage = () => {
         },
         {
           title: "REST",
-          link: "#rest",
+          link: "rest",
         },
         {
           title: "Info and Pagination",
-          link: "#info-and-pagination",
+          link: "info-and-pagination",
         },
         {
           title: "JavaScript client",
-          link: "#javascript-client",
+          link: "javascript-client",
         },
       ],
     },

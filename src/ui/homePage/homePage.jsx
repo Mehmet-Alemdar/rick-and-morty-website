@@ -51,7 +51,8 @@ const HomePage = () => {
     setData(res);
     setTimeout(() => {
       setIsLoading(false);
-    }, 1500);
+      scrollToTop();
+    }, 1000);
   };
 
   const handleSearch = async (val, by) => {

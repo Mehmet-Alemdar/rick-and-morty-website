@@ -7,17 +7,17 @@ import { AiOutlinePlus } from "react-icons/ai";
 const PageRendering = ({content, sideBarToggle, isSideBarOpen}) => {
 
   return (
-<div className='w-full flex justify-center pt-[50px] md:border-l-[1px] pb-6 sm:px-0 px-4'>
-      <div className='max-w-[900px] px-1.5 w-full overflow-x-auto'>
+    <div className='w-full flex flex-col items-center justify-center pt-[100px] md:border-l-[1px] pb-6 sm:px-0 px-4'>
+      <div className='max-w-[900px] px-1.5 w-full'>
         {
         content && Array.isArray(content) && content.length > 0 && content.map((item, index) => {
           if (item.type === 'heading') {
-            return <h1 key={index} className='font-bold sm:text-4xl text-3xl text-primary-black break-words'>{item.value}</h1>
+            return <h1 id={item.link} key={index} className='font-bold sm:text-4xl text-3xl text-primary-black break-words'>{item.value}</h1>
           }
           if (item.type === 'subtitle') {
             return (
               <div key={index}>
-                <p className='sm:text-[28px] text-[24px] font-bold pt-20 pb-2 text-primary-black break-words'>{item.value}</p>
+                <p id={item.link} className='sm:text-[28px] text-[24px] font-bold pt-20 pb-2 text-primary-black break-words'>{item.value}</p>
                 {
                   item.content && Array.isArray(item.content) && item.content.length > 0 && item.content.map((subItem, subIndex) => {
                     if (subItem.type === 'text') {
@@ -74,6 +74,9 @@ const PageRendering = ({content, sideBarToggle, isSideBarOpen}) => {
           }
         })
       }
+      </div>
+      <div className='bg-gradient-to-t h-36 w-full flex justify-center items-end mt-[-100px] from-white via-white to-transparent'>
+        <p>Get premium for more content</p>
       </div>
       <button onClick={sideBarToggle} className={`md:hidden fixed bottom-5 z-[55] right-5 bg-primary-orange shadow-xl p-4 rounded-full inset-border transition-all duration-150 text-2xl ${isSideBarOpen ? "rotate-45" : "rotate-0"}`}>
         <AiOutlinePlus />
