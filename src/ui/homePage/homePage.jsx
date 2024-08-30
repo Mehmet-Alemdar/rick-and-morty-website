@@ -9,6 +9,8 @@ import Modal from "@/ui/modal/modal";
 import StatusDot from "@/components/status-dot/statusDot";
 import CharacterCardSkeleton from "@/components/skeleton/characterCardSkeleton";
 import { BsChevronUp } from "react-icons/bs";
+import { AiFillHeart } from "react-icons/ai";
+
 
 const HomePage = () => {
   const [data, setData] = useState(null);
@@ -16,6 +18,8 @@ const HomePage = () => {
   const [search, setSearch] = useState({ val: "", by: "name" });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
+  const [favorites, setFavorites] = useState([]);
+  const [showFavorites, setShowFavorites] = useState(false);
   const topDivRef = useRef(null);
 
   const scrollToTop = () => {
@@ -39,9 +43,12 @@ const HomePage = () => {
     fetchCharacters({ page: 1 }).then((res) => {
       setData(res);
 
+      const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      setFavorites(storedFavorites);
+
       setTimeout(() => {
         setIsLoading(false);
-      }, 1500);
+      }, 100);
     });
   }, []);
 
@@ -57,6 +64,19 @@ const HomePage = () => {
 
   const handleSearch = async (val, by) => {
     setSearch({ val, by });
+  };
+
+  const handleFavoriteClick = (id) => {
+    const updatedFavorites = favorites.includes(id)
+    ? favorites.filter(favId => favId !== id)
+    : [...favorites, id];
+
+    setFavorites(updatedFavorites);
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+  };
+
+  const handleShowFavorites = () => {
+    setShowFavorites(!showFavorites);
   };
 
   return (
@@ -82,8 +102,8 @@ const HomePage = () => {
             </>
           ) : (
             <>
-              <div className="w-full flex items-center justify-center">
-                <SearchBox handleSearch={handleSearch} />
+              <div className="w-[1200px] flex items-center justify-center">
+                <SearchBox handleSearch={handleSearch} handleShowFavorites={handleShowFavorites} showFavorites={showFavorites}/>
               </div>
               <Modal isOpen={isModalOpen} onClose={closeModal}>
                 <>
@@ -154,10 +174,46 @@ const HomePage = () => {
                   )}
                 </>
               </Modal>
+              <div className="w-full flex justify-center">
+              {data.results.filter(item => showFavorites ? favorites.includes(item.id) : true).filter((item) =>
+                      item[search.by]
+                        .toLowerCase()
+                        .includes(search.val.toLowerCase())
+                    ).length === 0 
+                 ?
+                 <p className="text-white sm:text-lg text-[14px] font-light">There is nothing to see</p>
+                 :
+                  <>
+                    {showFavorites 
+                      ? 
+                      <p className="text-white sm:text-lg text-[14px] font-light">You are see  <strong className="text-primary-orange">  
+                        {data.results.filter(item => showFavorites ? favorites.includes(item.id) : true).filter((item) =>
+                          item[search.by]
+                            .toLowerCase()
+                            .includes(search.val.toLowerCase())
+                        ).length} 
+                        </strong> <strong className="text-primary-orange">favorite</strong> characters in page {data.info.next ? Number(data.info.next.split('=')[1]) - 1 : Number(data.info.prev.split('=')[1]) + 1} of {data.info.pages}
+                      </p>
+                      :
+                      <p className="text-white sm:text-lg text-[14px] font-light">You are see  <strong className="text-primary-orange">  
+                        {data.results.filter(item => showFavorites ? favorites.includes(item.id) : true).filter((item) =>
+                          item[search.by]
+                            .toLowerCase()
+                            .includes(search.val.toLowerCase())
+                        ).length} 
+                        </strong> characters in page {data.info.next ? Number(data.info.next.split('=')[1]) - 1 : Number(data.info.prev.split('=')[1]) + 1} of {data.info.pages}
+                      </p>
+                    }
+                  </>
+                } 
+
+
+              </div>
               {data &&
                 data.results &&
                 data.results.length > 0 &&
                 data.results
+                  .filter(item => showFavorites ? favorites.includes(item.id) : true)
                   .filter((item) =>
                     item[search.by]
                       .toLowerCase()
@@ -178,14 +234,21 @@ const HomePage = () => {
                           priority
                         />
                       </div>
-                      <div className="flex flex-col justify-around ml-0 sm:ml-4 p-4 sm:p-0">
-                        <div>
-                          <h2
-                            onClick={() => openModal(item.id)}
-                            className="text-2xl font-extrabold text-white cursor-pointer hover:text-primary-orange"
-                          >
-                            {item.name}
-                          </h2>
+                      <div className="flex flex-col justify-around ml-0 sm:ml-4 p-4 sm:p-0 w-[60%]">
+                        <div className="w-full">
+                          <div className="flex justify-between w-full">
+                            <h2
+                              onClick={() => openModal(item.id)}
+                              className="text-2xl font-extrabold text-white cursor-pointer hover:text-primary-orange"
+                            >
+                              {item.name}
+                            </h2>
+                            <p title="Add to favorites" className={`text-white cursor-pointer text-2xl transition-all duration-150 ${favorites.includes(item.id) && 'text-primary-orange'}`}
+                            onClick={() => handleFavoriteClick(item.id)}>
+                              <AiFillHeart />
+                            </p>
+                          </div>
+
                           <div className="flex items-center gap-2">
                             <StatusDot status={item.status} />
                             <p className="text-white">

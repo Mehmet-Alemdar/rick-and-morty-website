@@ -7,7 +7,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 const PageRendering = ({content, sideBarToggle, isSideBarOpen}) => {
 
   return (
-    <div className='w-full flex flex-col items-center justify-center pt-[100px] md:border-l-[1px] pb-6 sm:px-0 px-4'>
+    <div className='w-full flex flex-col items-center justify-center pt-[100px] lg:border-l-[1px] pb-6 sm:px-0 px-4'>
       <div className='max-w-[900px] px-1.5 w-full'>
         {
         content && Array.isArray(content) && content.length > 0 && content.map((item, index) => {
@@ -37,7 +37,7 @@ const PageRendering = ({content, sideBarToggle, isSideBarOpen}) => {
                     }
                     if (subItem.type === 'code') {
                       return (
-                        <div key={subIndex} className='rounded-[4px] md:rounded-[6px] overflow-hidden mb-2 md:mb-4'>
+                        <div key={subIndex} className='rounded-[4px] lg:rounded-[6px] overflow-hidden mb-2 lg:mb-4 w-[100%]'>
                         <SyntaxHighlighter language="javascript" style={themes['tomorrowNight']}>
                           {subItem.value}
                         </SyntaxHighlighter>
@@ -46,7 +46,7 @@ const PageRendering = ({content, sideBarToggle, isSideBarOpen}) => {
                     }
                     if (subItem.type === 'block') {
                       return (
-                        <div key={subIndex} className='border-l-8 border-l-primary-orange bg-secondary-orange py-4 px-2 break-words'>
+                        <div key={subIndex} className='border-l-8 border-l-primary-orange bg-secondary-orange py-4 px-2 break-words w-[100%]'>
                           <p className='sm:text-[18px] text-[15px] font-light italic text-slate-600 break-words'>{subItem.value}
                             {subItem.text_link && (
                               <a href={subItem.link} className='sm:text-[18px] text-[15px] text-primary-black underline underline-offset-4 decoration-primary-orange hover:no-underline hover:text-primary-orange transition-all duration-150 break-words'>{subItem.text_link}</a>
@@ -63,22 +63,14 @@ const PageRendering = ({content, sideBarToggle, isSideBarOpen}) => {
               </div>
             )
           }
-          if (item.type === 'code') {
-            return (
-              <div key={index} className='rounded-xl overflow-hidden pb-80'>
-              <SyntaxHighlighter language="javascript" style={atelierCaveDark}>
-                {item.value}
-              </SyntaxHighlighter>
-              </div>
-            )
-          }
         })
       }
       </div>
-      <div className='bg-gradient-to-t h-36 w-full flex justify-center items-end mt-[-100px] from-white via-white to-transparent'>
-        <p>Get premium for more content</p>
+      <div className='bg-gradient-to-t h-36 w-full flex flex-col justify-end items-center gap-2 mt-[-100px] from-white via-white to-transparent '>
+        <p className='font-medium sm:text-[20px] text-[16px]'>Get premium for more content</p>
+        <button className='bg-primary-orange text-white p-2 rounded-md ml-2 font-light sm:text-[17px] text-[14px]'>Get Premium</button>
       </div>
-      <button onClick={sideBarToggle} className={`md:hidden fixed bottom-5 z-[55] right-5 bg-primary-orange shadow-xl p-4 rounded-full inset-border transition-all duration-150 text-2xl ${isSideBarOpen ? "rotate-45" : "rotate-0"}`}>
+      <button onClick={sideBarToggle} className={`lg:hidden fixed bottom-5 z-[55] right-5 bg-primary-orange shadow-xl p-4 rounded-full inset-border transition-all duration-300 text-2xl ${isSideBarOpen ? "rotate-45" : "rotate-0"}`}>
         <AiOutlinePlus />
       </button>
     </div>
