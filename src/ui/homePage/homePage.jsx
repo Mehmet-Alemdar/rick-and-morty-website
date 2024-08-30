@@ -51,7 +51,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-0">
+    <div className="flex flex-col items-center gap-0 bg-white">
       <div className="min-h-[400px] relative flex items-center text-center">
         <h1 className="relative z-10 md:text-8xl sm:text-6xl text-5xl font-black text-primary-black">
           The Rick and Morty API

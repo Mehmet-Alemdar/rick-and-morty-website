@@ -12,7 +12,7 @@ const Footer = () => {
   return (
     <div className='bg-[#212328] w-full mt-auto py-[81px] flex flex-col items-center gap-8'>
       <div className='flex flex-col items-center gap-2'>
-        <div className='flex  sm:flex-row flex-col gap-5'>
+        <div className='flex  sm:flex-row flex-wrap justify-center gap-5'>
           <p className='text-sm uppercase font-semibold text-[#9e9e9e]'>Characters: 826</p>
           <p className='text-sm uppercase font-semibold text-[#9e9e9e]'>Locations: 126</p>
           <p className='text-sm uppercase font-semibold text-[#9e9e9e]'>Episodes: 51</p>
@@ -22,7 +22,7 @@ const Footer = () => {
           <StatusDot status='Alive' />
         </div>
       </div>
-      <div className='flex gap-6 items-center'>
+      <div className='flex sm:flex-row flex-col gap-6 items-center'>
         <Netlify />
         <Stellate />
       </div>
