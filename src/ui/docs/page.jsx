@@ -1,6 +1,7 @@
 "use client";
 import DocsSideBar from "@/components/docs-side-bar/docsSideBar";
 import PageRendering from "@/components/page-rendering/pageRendering";
+import EditThisPage from "@/components/edit-this-page/editThisPage";
 
 import React from "react";
 
@@ -249,10 +250,15 @@ const DocsPage = () => {
     },
   ]
   return (
-    <div className="flex px-[27px]">
-      <DocsSideBar content={sideBarContent}/>
-      <PageRendering content={content}/>
+    <div>
+      <div className="flex px-[27px]">
+        <DocsSideBar content={sideBarContent} />
+        <PageRendering content={content} />
+      </div>
+      <EditThisPage />
     </div>
+
+
   );
 };
 

@@ -6,7 +6,7 @@ import * as themes from "react-syntax-highlighter/dist/esm/styles/hljs";
 const PageRendering = ({content}) => {
 
   return (
-    <div className='w-full flex justify-center pt-[50px]'>
+    <div className='w-full flex justify-center pt-[50px] border-l-[1px] pb-6'>
       <div className='max-w-[900px] px-1.5'>
         {
         content && Array.isArray(content) && content.length > 0 && content.map((item, index) => {
