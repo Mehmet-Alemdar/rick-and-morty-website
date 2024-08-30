@@ -48,7 +48,7 @@ const HomePage = () => {
 
       setTimeout(() => {
         setIsLoading(false);
-      }, 100);
+      }, 1500);
     });
   }, []);
 
@@ -234,16 +234,16 @@ const HomePage = () => {
                           priority
                         />
                       </div>
-                      <div className="flex flex-col justify-around ml-0 sm:ml-4 p-4 sm:p-0 w-[60%]">
+                      <div className="flex flex-col justify-around ml-0 sm:ml-4 p-4 sm:p-0 sm:w-[60%] w-[100%]">
                         <div className="w-full">
-                          <div className="flex justify-between w-full">
+                          <div className="flex justify-between w-full ">
                             <h2
                               onClick={() => openModal(item.id)}
                               className="text-2xl font-extrabold text-white cursor-pointer hover:text-primary-orange"
                             >
                               {item.name}
                             </h2>
-                            <p title="Add to favorites" className={`text-white cursor-pointer text-2xl transition-all duration-150 ${favorites.includes(item.id) && 'text-primary-orange'}`}
+                            <p title="Add to favorites" className={`cursor-pointer text-2xl transition-all duration-150 ${favorites.includes(item.id) ? 'text-primary-orange' : 'text-white'}`}
                             onClick={() => handleFavoriteClick(item.id)}>
                               <AiFillHeart />
                             </p>

@@ -8,7 +8,10 @@ const CharacterCardSkeleton = () => {
       </div>
       <div className='flex flex-col justify-around ml-0 sm:ml-4 p-4 sm:p-0 gap-5 w-full'>
         <div>
-          <div className='h-6 bg-gray-600 rounded w-1/2 mb-2'></div>
+          <div className='flex justify-between items-center gap-4'>
+            <div className='h-6 bg-gray-600 rounded w-1/2 mb-2'></div>
+            <div className='h-6 w-6 rounded-full bg-gray-600 mr-2'></div>
+          </div>
           <div className='flex items-center gap-4'>
             <div className='h-3 w-3 rounded-full bg-gray-600'></div>
             <div className='h-4 bg-gray-600 rounded w-1/2'></div>
