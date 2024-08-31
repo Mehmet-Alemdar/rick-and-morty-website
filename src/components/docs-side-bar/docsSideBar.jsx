@@ -1,8 +1,9 @@
 import React from 'react';
 
-const docsSideBar = ({ content, isSideBarOpen }) => {
+const docsSideBar = ({ content, isSideBarOpen, setIsSideBarOpen }) => {
   const handleLinkClick = (link) => {
     window.location.href = `#${link}`;
+    setIsSideBarOpen(false)
   };
 
   return (

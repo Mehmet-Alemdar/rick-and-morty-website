@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { AiFillHeart } from "react-icons/ai";
 
-const SearchBox = ({ handleSearch, handleShowFavorites, showFavorites }) => {
-  const [search, setSearch] = useState('')
-  const [filter, setFilter] = useState('name')
+const SearchBox = ({ handleSearch, handleShowFavorites, showFavorites, searchState }) => {
+  const [search, setSearch] = useState(searchState.val)
+  const [filter, setFilter] = useState(searchState.by)
 
   const handleInputChange = (e) => {
     const value = e.target.value
@@ -22,13 +22,15 @@ const SearchBox = ({ handleSearch, handleShowFavorites, showFavorites }) => {
       <div className="flex w-full  h-full">
         <input
           onChange={handleInputChange}
+          value={search}
           type="text"
           placeholder={`Search by ${filter}`}
-          className="w-full px-3 py-2 text-gray-700 border rounded-l-lg focus:outline-none text-lg text-[14px]"
+          className="w-full px-3 py-2 text-gray-700 border rounded-l-lg focus:outline-none text-[14px]"
         />
         <select
           onChange={handleSelectChange}
-          className="w-auto sm:px-3 px-0 py-1 text-gray-700 border rounded-r-lg focus:outline-none text-lg text-[14px]"
+          value={filter}
+          className="w-auto sm:px-3 px-0 py-1 text-gray-700 border rounded-r-lg focus:outline-none text-[14px]"
         >
           <option value="name">by Name</option>
           <option value="species">by Species</option>

@@ -279,7 +279,7 @@ const DocsPage = () => {
   return (
     <div>
       <div className="flex px-[27px]">
-        <DocsSideBar content={sideBarContent} isSideBarOpen={isSideBarOpen}/>
+        <DocsSideBar content={sideBarContent} isSideBarOpen={isSideBarOpen} setIsSideBarOpen={setIsSideBarOpen}/>
         <PageRendering content={content} sideBarToggle={sideBarToggle} isSideBarOpen={isSideBarOpen}/>
       </div>
       <EditThisPage />

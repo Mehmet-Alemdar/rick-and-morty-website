@@ -10,6 +10,8 @@ import StatusDot from "@/components/status-dot/statusDot";
 import CharacterCardSkeleton from "@/components/skeleton/characterCardSkeleton";
 import { BsChevronUp } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
+import CharacterModal from "@/components/character-modal/characterModal";
+import LikeModal from "@/components/like-modal/likeModal";
 
 
 const HomePage = () => {
@@ -20,6 +22,7 @@ const HomePage = () => {
   const [modalData, setModalData] = useState(null);
   const [favorites, setFavorites] = useState([]);
   const [showFavorites, setShowFavorites] = useState(false);
+  const [isLiked, setIsLiked] = useState({status: false, message: ""})
   const topDivRef = useRef(null);
 
   const scrollToTop = () => {
@@ -54,11 +57,11 @@ const HomePage = () => {
 
   const onPageChange = async (page) => {
     setIsLoading(true);
+    scrollToTop();
     const res = await fetchCharacters({ page });
     setData(res);
     setTimeout(() => {
       setIsLoading(false);
-      scrollToTop();
     }, 1000);
   };
 
@@ -66,10 +69,23 @@ const HomePage = () => {
     setSearch({ val, by });
   };
 
-  const handleFavoriteClick = (id) => {
-    const updatedFavorites = favorites.includes(id)
-    ? favorites.filter(favId => favId !== id)
-    : [...favorites, id];
+  const handleFavoriteClick = (id, name) => {
+    let updatedFavorites = favorites.includes(id)
+
+    if(updatedFavorites) {
+      updatedFavorites = favorites.filter(favId => favId !== id)
+      setIsLiked({status: true, name: name, message: "unliked"})
+      setTimeout(() => {
+        setIsLiked({status: false, name: "", message: ""})
+      }, 1500);
+    } else {
+      updatedFavorites = [...favorites, id];
+      setIsLiked({status: true, name: name, message: "liked"})
+      setTimeout(() => {
+        setIsLiked({status: false, name: "", message: ""})
+      }, 1500);
+    }
+    console.log("updatedFavorites", updatedFavorites)
 
     setFavorites(updatedFavorites);
     localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
@@ -103,78 +119,17 @@ const HomePage = () => {
           ) : (
             <>
               <div className="w-[1200px] flex items-center justify-center">
-                <SearchBox handleSearch={handleSearch} handleShowFavorites={handleShowFavorites} showFavorites={showFavorites}/>
+                <SearchBox handleSearch={handleSearch} handleShowFavorites={handleShowFavorites} showFavorites={showFavorites} searchState={search}/>
               </div>
-              <Modal isOpen={isModalOpen} onClose={closeModal}>
-                <>
-                  {modalData && (
-                    <div className="flex flex-col bg-[#3c3e44] w-[100%] h-auto overflow-hidden rounded-lg items-center text-center">
-                      <div className="h-full w-full">
-                        <Image
-                          src={modalData.image}
-                          alt={modalData.name}
-                          width={220}
-                          height={220}
-                          className="object-cover h-full w-full"
-                          priority
-                        />
-                      </div>
-                      <div className="flex flex-col justify-around gap-4 py-4">
-                        <div>
-                          <h2 className="sm:text-3xl text-2xl font-extrabold text-white cursor-pointer hover:text-primary-orange">
-                            {modalData.name}
-                          </h2>
-                          <div className="flex items-center gap-2 justify-center">
-                            {/* <div className={`h-3 w-3 rounded-full sm:text-xl ${statusDot(modalData.status)}`}></div> */}
-                            <StatusDot status={modalData.status} />
-                            <p className="text-white sm:text-xl">
-                              {modalData.species} - {modalData.status}
-                            </p>
-                          </div>
-                        </div>
-                        <div>
-                          <p className="text-gray-500 sm:text-xl">Gender</p>
-                          <p
-                            className={`text-white font-light sm:text-xl ${
-                              modalData.gender != "unknown" &&
-                              "cursor-pointer hover:text-primary-orange"
-                            }`}
-                          >
-                            {modalData.gender}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-gray-500 sm:text-xl">
-                            Last known location
-                          </p>
-                          <p
-                            className={`text-white font-light sm:text-xl ${
-                              modalData.location.name != "unknown" &&
-                              "cursor-pointer hover:text-primary-orange"
-                            }`}
-                          >
-                            {modalData.location.name}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-gray-500 sm:text-xl">
-                            First seen in
-                          </p>
-                          <p
-                            className={`text-white font-light sm:text-xl ${
-                              modalData.origin.name != "unknown" &&
-                              "cursor-pointer hover:text-primary-orange"
-                            }`}
-                          >
-                            {modalData.origin.name}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </>
+              {modalData && (
+                <Modal isOpen={isModalOpen} onClose={closeModal}>
+                  <CharacterModal modalData={modalData} />
+                </Modal>
+              )}
+              <Modal isOpen={isLiked.status}>
+                <LikeModal name={isLiked.name} message={isLiked.message}/>
               </Modal>
-              <div className="w-full flex justify-center">
+              <div className="w-full flex justify-center text-center">
               {data.results.filter(item => showFavorites ? favorites.includes(item.id) : true).filter((item) =>
                       item[search.by]
                         .toLowerCase()
@@ -244,7 +199,7 @@ const HomePage = () => {
                               {item.name}
                             </h2>
                             <p title="Add to favorites" className={`cursor-pointer text-2xl transition-all duration-150 ${favorites.includes(item.id) ? 'text-primary-orange' : 'text-white'}`}
-                            onClick={() => handleFavoriteClick(item.id)}>
+                            onClick={() => handleFavoriteClick(item.id, item.name)}>
                               <AiFillHeart />
                             </p>
                           </div>
