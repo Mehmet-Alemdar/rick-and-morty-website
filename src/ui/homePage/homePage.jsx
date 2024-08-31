@@ -13,7 +13,6 @@ import { AiFillHeart } from "react-icons/ai";
 import CharacterModal from "@/components/character-modal/characterModal";
 import LikeModal from "@/components/like-modal/likeModal";
 
-
 const HomePage = () => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -22,7 +21,7 @@ const HomePage = () => {
   const [modalData, setModalData] = useState(null);
   const [favorites, setFavorites] = useState([]);
   const [showFavorites, setShowFavorites] = useState(false);
-  const [isLiked, setIsLiked] = useState({status: false, message: ""})
+  const [isLiked, setIsLiked] = useState({ status: false, message: "" });
   const topDivRef = useRef(null);
 
   const scrollToTop = () => {
@@ -46,7 +45,8 @@ const HomePage = () => {
     fetchCharacters({ page: 1 }).then((res) => {
       setData(res);
 
-      const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      const storedFavorites =
+        JSON.parse(localStorage.getItem("favorites")) || [];
       setFavorites(storedFavorites);
 
       setTimeout(() => {
@@ -70,25 +70,24 @@ const HomePage = () => {
   };
 
   const handleFavoriteClick = (id, name) => {
-    let updatedFavorites = favorites.includes(id)
+    let updatedFavorites = favorites.includes(id);
 
-    if(updatedFavorites) {
-      updatedFavorites = favorites.filter(favId => favId !== id)
-      setIsLiked({status: true, name: name, message: "unliked"})
+    if (updatedFavorites) {
+      updatedFavorites = favorites.filter((favId) => favId !== id);
+      setIsLiked({ status: true, name: name, message: "unliked" });
       setTimeout(() => {
-        setIsLiked({status: false, name: "", message: ""})
+        setIsLiked({ status: false, name: "", message: "" });
       }, 1500);
     } else {
       updatedFavorites = [...favorites, id];
-      setIsLiked({status: true, name: name, message: "liked"})
+      setIsLiked({ status: true, name: name, message: "liked" });
       setTimeout(() => {
-        setIsLiked({status: false, name: "", message: ""})
+        setIsLiked({ status: false, name: "", message: "" });
       }, 1500);
     }
-    console.log("updatedFavorites", updatedFavorites)
 
     setFavorites(updatedFavorites);
-    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
   };
 
   const handleShowFavorites = () => {
@@ -119,7 +118,12 @@ const HomePage = () => {
           ) : (
             <>
               <div className="w-[1200px] flex items-center justify-center">
-                <SearchBox handleSearch={handleSearch} handleShowFavorites={handleShowFavorites} showFavorites={showFavorites} searchState={search}/>
+                <SearchBox
+                  handleSearch={handleSearch}
+                  handleShowFavorites={handleShowFavorites}
+                  showFavorites={showFavorites}
+                  searchState={search}
+                />
               </div>
               {modalData && (
                 <Modal isOpen={isModalOpen} onClose={closeModal}>
@@ -127,48 +131,85 @@ const HomePage = () => {
                 </Modal>
               )}
               <Modal isOpen={isLiked.status}>
-                <LikeModal name={isLiked.name} message={isLiked.message}/>
+                <LikeModal name={isLiked.name} message={isLiked.message} />
               </Modal>
               <div className="w-full flex justify-center text-center">
-              {data.results.filter(item => showFavorites ? favorites.includes(item.id) : true).filter((item) =>
-                      item[search.by]
-                        .toLowerCase()
-                        .includes(search.val.toLowerCase())
-                    ).length === 0 
-                 ?
-                 <p className="text-white sm:text-lg text-[14px] font-light">There is nothing to see</p>
-                 :
+                {data.results
+                  .filter((item) =>
+                    showFavorites ? favorites.includes(item.id) : true
+                  )
+                  .filter((item) =>
+                    item[search.by]
+                      .toLowerCase()
+                      .includes(search.val.toLowerCase())
+                  ).length === 0 ? (
+                  <p className="text-white sm:text-lg text-[14px] font-light">
+                    There is nothing to see
+                  </p>
+                ) : (
                   <>
-                    {showFavorites 
-                      ? 
-                      <p className="text-white sm:text-lg text-[14px] font-light">You are see  <strong className="text-primary-orange">  
-                        {data.results.filter(item => showFavorites ? favorites.includes(item.id) : true).filter((item) =>
-                          item[search.by]
-                            .toLowerCase()
-                            .includes(search.val.toLowerCase())
-                        ).length} 
-                        </strong> <strong className="text-primary-orange">favorite</strong> characters in page {data.info.next ? Number(data.info.next.split('=')[1]) - 1 : Number(data.info.prev.split('=')[1]) + 1} of {data.info.pages}
+                    {showFavorites ? (
+                      <p className="text-white sm:text-lg text-[14px] font-light">
+                        You are see{" "}
+                        <strong className="text-primary-orange">
+                          {
+                            data.results
+                              .filter((item) =>
+                                showFavorites
+                                  ? favorites.includes(item.id)
+                                  : true
+                              )
+                              .filter((item) =>
+                                item[search.by]
+                                  .toLowerCase()
+                                  .includes(search.val.toLowerCase())
+                              ).length
+                          }
+                        </strong>{" "}
+                        <strong className="text-primary-orange">
+                          favorite
+                        </strong>{" "}
+                        characters in page{" "}
+                        {data.info.next
+                          ? Number(data.info.next.split("=")[1]) - 1
+                          : Number(data.info.prev.split("=")[1]) + 1}{" "}
+                        of {data.info.pages}
                       </p>
-                      :
-                      <p className="text-white sm:text-lg text-[14px] font-light">You are see  <strong className="text-primary-orange">  
-                        {data.results.filter(item => showFavorites ? favorites.includes(item.id) : true).filter((item) =>
-                          item[search.by]
-                            .toLowerCase()
-                            .includes(search.val.toLowerCase())
-                        ).length} 
-                        </strong> characters in page {data.info.next ? Number(data.info.next.split('=')[1]) - 1 : Number(data.info.prev.split('=')[1]) + 1} of {data.info.pages}
+                    ) : (
+                      <p className="text-white sm:text-lg text-[14px] font-light">
+                        You are see{" "}
+                        <strong className="text-primary-orange">
+                          {
+                            data.results
+                              .filter((item) =>
+                                showFavorites
+                                  ? favorites.includes(item.id)
+                                  : true
+                              )
+                              .filter((item) =>
+                                item[search.by]
+                                  .toLowerCase()
+                                  .includes(search.val.toLowerCase())
+                              ).length
+                          }
+                        </strong>{" "}
+                        characters in page{" "}
+                        {data.info.next
+                          ? Number(data.info.next.split("=")[1]) - 1
+                          : Number(data.info.prev.split("=")[1]) + 1}{" "}
+                        of {data.info.pages}
                       </p>
-                    }
+                    )}
                   </>
-                } 
-
-
+                )}
               </div>
               {data &&
                 data.results &&
                 data.results.length > 0 &&
                 data.results
-                  .filter(item => showFavorites ? favorites.includes(item.id) : true)
+                  .filter((item) =>
+                    showFavorites ? favorites.includes(item.id) : true
+                  )
                   .filter((item) =>
                     item[search.by]
                       .toLowerCase()
@@ -198,8 +239,17 @@ const HomePage = () => {
                             >
                               {item.name}
                             </h2>
-                            <p title="Add to favorites" className={`cursor-pointer text-2xl transition-all duration-150 ${favorites.includes(item.id) ? 'text-primary-orange' : 'text-white'}`}
-                            onClick={() => handleFavoriteClick(item.id, item.name)}>
+                            <p
+                              title="Add to favorites"
+                              className={`cursor-pointer text-2xl transition-all duration-150 ${
+                                favorites.includes(item.id)
+                                  ? "text-primary-orange"
+                                  : "text-white"
+                              }`}
+                              onClick={() =>
+                                handleFavoriteClick(item.id, item.name)
+                              }
+                            >
                               <AiFillHeart />
                             </p>
                           </div>
